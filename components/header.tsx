@@ -12,7 +12,7 @@ export function Header({ onLogout, isPolling = false }: HeaderProps) {
   return (
     <header className="flex h-16 items-center justify-between border-b px-6 bg-card">
       <div className="flex items-center gap-4">
-        <h1 className="text-xl font-bold">PrivateChat</h1>
+        <h1 className="text-xl font-bold">Aaroh</h1>
         {isPolling && (
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="relative flex h-2 w-2">

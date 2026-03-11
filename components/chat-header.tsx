@@ -33,7 +33,7 @@ function StatusBadge({ status, name }: { status: PresenceStatus; name: string })
 export function ChatHeader({ onLogout, myStatus, otherStatus, myName, otherName }: ChatHeaderProps) {
   return (
     <header className="sticky top-0 z-10 flex h-14 md:h-16 shrink-0 items-center justify-between border-b border-zinc-800 bg-zinc-950/95 backdrop-blur px-3 md:px-6 shadow-sm">
-      <h1 className="text-base md:text-lg font-semibold text-white tracking-tight shrink-0 hidden sm:block mr-2">PrivateChat</h1>
+      <h1 className="text-base md:text-lg font-semibold text-white tracking-tight shrink-0 hidden sm:block mr-2">Aaroh</h1>
 
       <div className="flex items-center gap-1.5 md:gap-2 flex-1 sm:flex-initial justify-end sm:justify-start">
         <StatusBadge status={myStatus}    name={myName} />

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     const client = await clientPromise
-    const db = client.db('privatechat')
+    const db = client.db('Aaroh')
     const collection = db.collection('messages')
 
     await collection.insertOne({

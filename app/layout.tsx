@@ -1,12 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport: Viewport = {
+  interactiveWidget: "resizes-content",
+};
+
 export const metadata: Metadata = {
-  title: "PrivateChat",
-  description: "End-to-end encrypted messaging for two.",
+  title: "Aaroh",
+  description: "A rising rhythm written in conversations.",
 };
 
 export default function RootLayout({

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'; // Prevent static caching
 export async function GET() {
   try {
     const client = await clientPromise
-    const db = client.db('privatechat')
+    const db = client.db('Aaroh')
     const collection = db.collection('messages')
 
     const messages = await collection

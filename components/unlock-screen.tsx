@@ -33,8 +33,8 @@ export function UnlockScreen({
           <div className="bg-zinc-800/50 p-3 rounded-full mb-2">
             <Lock className="h-6 w-6 text-blue-500" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-4">PrivateChat</h1>
-          <p className="text-sm text-zinc-400">Secure encrypted conversation</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-4">Aaroh</h1>
+          <p className="text-sm text-zinc-400">A rising rhythm written in conversations.</p>
         </div>
 
         <form onSubmit={onUnlock} className="space-y-5 md:space-y-6">

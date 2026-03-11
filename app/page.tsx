@@ -1,9 +1,9 @@
 export default function Home() {
   return (
     <main className="flex min-h-[100dvh] flex-col items-center justify-center p-8 md:p-24 overflow-hidden">
-      <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-center">PrivateChat</h1>
+      <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-center">Aaroh</h1>
       <p className="text-muted-foreground mb-8 text-center max-w-sm md:max-w-md text-sm md:text-base px-4">
-        A highly secure, end-to-end encrypted messaging platform designed exclusively for two users.
+        A rising rhythm written in conversations.
       </p>
       <a 
         href="/chat"

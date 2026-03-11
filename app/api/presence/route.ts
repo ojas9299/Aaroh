@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     }
 
     const client = await clientPromise
-    const db = client.db('privatechat')
+    const db = client.db('Aaroh')
     const collection = db.collection('presence')
 
     await collection.updateOne(
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const client = await clientPromise
-    const db = client.db('privatechat')
+    const db = client.db('Aaroh')
     const collection = db.collection('presence')
 
     const records = await collection.find({}).toArray()

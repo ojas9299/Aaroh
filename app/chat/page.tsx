@@ -14,6 +14,7 @@ import { deriveKey, encryptMessage, decryptMessage } from "@/lib/crypto"
 import { UnlockScreen } from "@/components/unlock-screen"
 import { usePresence } from "@/hooks/use-presence"
 import { useAutoLock } from "@/hooks/use-auto-lock"
+import { useNotifications } from "@/hooks/use-notifications"
 
 type Message = {
   id: string
@@ -42,6 +43,8 @@ export default function ChatPage() {
   const [isPolling, setIsPolling] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   
+  const { requestPermission, notify } = useNotifications()
+
   const bottomRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
@@ -67,6 +70,15 @@ export default function ChatPage() {
           ? String(data[data.length - 1].timestamp)
           : ""
         if (latestId === lastMessageId) return
+
+        if (lastMessageId !== "") {
+          const newIncoming = data.filter(m => String(m.timestamp) > lastMessageId && m.sender !== userId)
+          if (newIncoming.length > 0) {
+            const senderName = userId === "user1" ? USERS.user2.name : USERS.user1.name;
+            notify(`New message from ${senderName}`, { body: "You have securely received a new message." })
+          }
+        }
+
         lastMessageId = latestId
 
         const decryptedMessages = await Promise.all(
@@ -99,6 +111,7 @@ export default function ChatPage() {
     try {
       const key = await deriveKey(passphrase)
       setCryptoKey(key)
+      await requestPermission()
     } catch (error) {
       console.error("Failed to derive key", error)
       alert("Failed to initialize security context.")

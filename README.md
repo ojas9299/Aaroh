@@ -1,4 +1,4 @@
-# PrivateChat
+# Aaroh
 
 A highly secure, end-to-end encrypted real-time messaging application designed specifically for two users.
 
@@ -28,7 +28,7 @@ A highly secure, end-to-end encrypted real-time messaging application designed s
 ### 2. Environment Variables
 Create a `.env.local` file in the root directory (or add it to your hosting provider's dashboard) with the following:
 ```env
-MONGODB_URI="mongodb+srv://<username>:<password>@cluster.mongodb.net/privatechat?retryWrites=true&w=majority"
+MONGODB_URI="mongodb+srv://<username>:<password>@cluster.mongodb.net/Aaroh?retryWrites=true&w=majority"
 ```
 
 ### 3. Local Development

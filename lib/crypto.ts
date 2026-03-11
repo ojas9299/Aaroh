@@ -1,7 +1,7 @@
 // A fixed, named salt string. Both users MUST use the same passphrase AND this
 // constant salt to derive the same encryption key. Never change this value once
 // messages are stored, or all existing ciphertext becomes permanently unreadable.
-const SALT_STRING = "privatechat_shared_salt_v1";
+const SALT_STRING = "Aaroh_shared_salt_v1";
 const SALT = new TextEncoder().encode(SALT_STRING);
 const ITERATIONS = 100000;
 
