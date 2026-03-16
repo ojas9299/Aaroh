@@ -11,8 +11,8 @@ interface ChatMessageProps {
 }
 
 const USERS: Record<string, { name: string; avatar: string }> = {
-  user1: { name: "Meow", avatar: "🐱" },
-  user2: { name: "Quack", avatar: "🦆" }
+  meow: { name: "Meow", avatar: "🐱" },
+  quack: { name: "Quack", avatar: "🦆" }
 }
 
 export function ChatMessage({ 
