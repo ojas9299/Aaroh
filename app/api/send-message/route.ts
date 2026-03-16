@@ -4,6 +4,8 @@ import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 import { raagMessages } from "@/lib/raagMessages"
 
+export const dynamic = 'force-dynamic';
+
 const EMAIL_USER = process.env.EMAIL_USER
 const EMAIL_PASS = process.env.EMAIL_PASS
 
