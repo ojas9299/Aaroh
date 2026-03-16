@@ -1,22 +1,12 @@
-import Prism from "@/components/react-bits/Prism";
-import GradientText from "@/components/react-bits/GradientText";
+import GradientText from "@/components/GradientText";
 
 export default function Home() {
   return (
     <main className="relative flex min-h-[100dvh] flex-col items-center justify-center p-8 md:p-24 overflow-hidden bg-black">
-      {/* Prism Background - Only on Home Page */}
-      <Prism 
-        animationType="rotate"
-        glow={1.2}
-        scale={4}
-        timeScale={0.8}
-        className="opacity-50"
-      />
-      
       <div className="relative z-10 flex flex-col items-center justify-center">
         <GradientText
-          colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-          animationSpeed={3}
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          animationSpeed={8}
           showBorder={false}
           className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-center"
         >
