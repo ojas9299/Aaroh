@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Renderer, Camera, Transform, Program, Mesh, Vec2, Polyhedron } from 'ogl';
+import { Renderer, Camera, Transform, Program, Mesh, Vec2, Geometry } from 'ogl';
 
 interface PrismProps {
   height?: number;
@@ -100,19 +100,36 @@ export default function Prism({
 
     const scene = new Transform();
 
-    // Create Prism Geometry (Pyramid)
-    const geometry = new Polyhedron(gl, {
-      vertices: new Float32Array([
-        0, height / 2, 0,           // Top
-        -baseWidth / 2, -height / 2, baseWidth / 2,
-        baseWidth / 2, -height / 2, baseWidth / 2,
-        baseWidth / 2, -height / 2, -baseWidth / 2,
-        -baseWidth / 2, -height / 2, -baseWidth / 2,
-      ]),
-      indices: new Uint16Array([
-        0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1, // Sides
-        1, 3, 2, 1, 4, 3                    // Base
-      ]),
+    // Manually calculate normals for the pyramid
+    const vertices = new Float32Array([
+      0, height / 2, 0,           // Top (0)
+      -baseWidth / 2, -height / 2, baseWidth / 2,  // Front Left (1)
+      baseWidth / 2, -height / 2, baseWidth / 2,   // Front Right (2)
+      baseWidth / 2, -height / 2, -baseWidth / 2,  // Back Right (3)
+      -baseWidth / 2, -height / 2, -baseWidth / 2, // Back Left (4)
+    ]);
+
+    const indices = new Uint16Array([
+      0, 1, 2, // Front
+      0, 2, 3, // Right
+      0, 3, 4, // Back
+      0, 4, 1, // Left
+      1, 3, 2, 1, 4, 3 // Base
+    ]);
+
+    // Simple flat normals for now
+    const normals = new Float32Array([
+      0, 1, 0,
+      -1, -1, 1,
+      1, -1, 1,
+      1, -1, -1,
+      -1, -1, -1,
+    ]);
+
+    const geometry = new Geometry(gl, {
+      position: { size: 3, data: vertices },
+      index: { data: indices },
+      normal: { size: 3, data: normals },
     });
 
     const program = new Program(gl, {
