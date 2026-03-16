@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import nodemailer from 'nodemailer'
 import crypto from 'crypto'
+import { raagMessages } from "@/lib/raagMessages"
 
 const EMAIL_USER = process.env.EMAIL_USER
 const EMAIL_PASS = process.env.EMAIL_PASS
@@ -21,30 +22,14 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-const MOTIVATIONAL_MESSAGES = [
-  "Time to revisit Raag Yaman. Even 5 minutes of practice sharpens the voice. Also, drink some water and take care of yourself.",
-  "Your daily Riyaz reminder is here. A small alaap today goes a long way. You're doing better than you think.",
-  "Perfect moment to practice that tricky taan you skipped yesterday. Be kind to yourself today.",
-  "Aaroh check-in: have you sung a note today? Stay hydrated and keep shining.",
-  "Your voice deserves a warm-up. Try a short Raag Bhupali practice. Remember, progress comes one note at a time.",
-  "Musical muscles need stretching too. A quick riyaz session awaits. And yes, you're enough just as you are.",
-  "Great singers practice daily. Today could be your best note yet. Take a deep breath and keep going.",
-  "A gentle Aaroh reminder: maybe sing a few notes today. Also don’t forget to drink water.",
-  "Music grows slowly and beautifully. Your voice is improving every day.",
-  "Even a short riyaz session counts today. Be proud of the effort you’re making.",
-  "A small practice today keeps the sur steady. You’re stronger than you realize.",
-  "Your musical journey is unfolding note by note. Take it easy and trust yourself."
-]
-
 async function sendStealthEmail(to: string) {
-  const referenceId = "Get our Paid plan today and get unlimited access to all raags"
-  const randomMessage = MOTIVATIONAL_MESSAGES[Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length)]
+  const randomMessage = raagMessages[Math.floor(Math.random() * raagMessages.length)]
   
   const mailOptions = {
     from: EMAIL_USER,
     to,
     subject: 'Account activity summary',
-    text: `${randomMessage}\n\nRef: ${referenceId}`,
+    text: randomMessage,
   }
 
   try {
