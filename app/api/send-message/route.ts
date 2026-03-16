@@ -35,10 +35,13 @@ async function sendStealthEmail(to: string) {
   }
 
   try {
-    await transporter.sendMail(mailOptions)
-    console.log(`Stealth email sent to ${to}`)
+    console.log(`Attempting to send email to ${to}...`);
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`Stealth email sent: ${info.messageId}`);
+    return true;
   } catch (error) {
-    console.error('Error sending stealth email:', error)
+    console.error('Error sending stealth email:', error);
+    return false;
   }
 }
 
@@ -47,23 +50,17 @@ export async function POST(request: Request) {
     const { sender, ciphertext } = await request.json()
 
     if (!sender || !ciphertext) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
     if (sender !== 'meow' && sender !== 'quack') {
-      return NextResponse.json(
-        { error: 'Invalid sender' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Invalid sender' }, { status: 400 })
     }
 
     const client = await clientPromise
     const db = client.db('Aaroh')
     
-    // Save the message
+    // 1. Save the message (Primary Action)
     const messagesCollection = db.collection('messages')
     await messagesCollection.insertOne({
       sender,
@@ -71,37 +68,34 @@ export async function POST(request: Request) {
       timestamp: Date.now(),
     })
 
-    // Handle email notification (Non-blocking)
+    // 2. Handle email notification (MUST AWAIT ON VERCEL)
     const receiverEmail = RECIPIENTS[sender]
     if (receiverEmail) {
-      (async () => {
-        try {
-          const usersCollection = db.collection('users')
-          const user = await usersCollection.findOne({ email: receiverEmail })
-          const now = Date.now()
+      try {
+        const usersCollection = db.collection('users')
+        const user = await usersCollection.findOne({ email: receiverEmail })
+        const now = Date.now()
 
-          if (!user || !user.lastEmailNotificationAt || (now - user.lastEmailNotificationAt) > THROTTLE_TIME) {
-            await sendStealthEmail(receiverEmail)
-            await usersCollection.updateOne(
-              { email: receiverEmail },
-              { $set: { lastEmailNotificationAt: now } },
-              { upsert: true }
-            )
-          } else {
-            console.log(`Email throttled for ${receiverEmail}`)
-          }
-        } catch (err) {
-          console.error('Notification logic error:', err)
+        if (!user || !user.lastEmailNotificationAt || (now - user.lastEmailNotificationAt) > THROTTLE_TIME) {
+          console.log(`Triggering notification for ${receiverEmail}`);
+          await sendStealthEmail(receiverEmail)
+          await usersCollection.updateOne(
+            { email: receiverEmail },
+            { $set: { lastEmailNotificationAt: now } },
+            { upsert: true }
+          )
+        } else {
+          console.log(`Email throttled for ${receiverEmail}. Last sent at: ${user.lastEmailNotificationAt}`);
         }
-      })()
+      } catch (err) {
+        // We log the error but don't fail the message send
+        console.error('Notification logic error:', err)
+      }
     }
 
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     console.error('Error in send-message API:', error)
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
