@@ -9,12 +9,6 @@ const POLL_INTERVAL_MS      = 15_000   // fetch other user status every 15s
 const ONLINE_THRESHOLD_MS   = 30_000   // < 30s  → Online
 const AWAY_THRESHOLD_MS     = 120_000  // < 2min → Away
 
-// Map a userId like "user1" to the presence key ("meow" | "quack")
-const USER_KEY: Record<string, string> = {
-  user1: "meow",
-  user2: "quack",
-}
-
 function getStatus(lastSeen: number | null): PresenceStatus {
   if (lastSeen === null) return "offline"
   const age = Date.now() - lastSeen
@@ -24,7 +18,7 @@ function getStatus(lastSeen: number | null): PresenceStatus {
 }
 
 interface UsePresenceOptions {
-  userId: string       // "user1" | "user2"
+  userId: string       // "meow" | "quack"
   enabled: boolean     // only run when chat is unlocked
 }
 
@@ -35,8 +29,8 @@ interface PresenceResult {
 }
 
 export function usePresence({ userId, enabled }: UsePresenceOptions): PresenceResult {
-  const userKey  = USER_KEY[userId]  ?? userId
-  const otherKey = userId === "user1" ? "quack" : "meow"
+  const userKey  = userId
+  const otherKey = userId === "meow" ? "quack" : "meow"
 
   const [myStatus,    setMyStatus]    = useState<PresenceStatus>("offline")
   const [otherStatus, setOtherStatus] = useState<PresenceStatus>("offline")

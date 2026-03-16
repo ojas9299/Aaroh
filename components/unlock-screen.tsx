@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface UnlockScreenProps {
-  userId: "user1" | "user2"
-  setUserId: (id: "user1" | "user2") => void
+  userId: "meow" | "quack"
+  setUserId: (id: "meow" | "quack") => void
   passphrase: string
   setPassphrase: (p: string) => void
   isUnlocking: boolean
@@ -44,13 +44,13 @@ export function UnlockScreen({
             </label>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { id: "user1", name: "Meow", avatar: "🐱" },
-                { id: "user2", name: "Quack", avatar: "🦆" }
+                { id: "meow", name: "Meow", avatar: "🐱" },
+                { id: "quack", name: "Quack", avatar: "🦆" }
               ].map((user) => (
                 <button
                   key={user.id}
                   type="button"
-                  onClick={() => setUserId(user.id as "user1" | "user2")}
+                  onClick={() => setUserId(user.id as "meow" | "quack")}
                   className={cn(
                     "flex flex-col items-center justify-center p-4 rounded-xl border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-zinc-900 group",
                     userId === user.id

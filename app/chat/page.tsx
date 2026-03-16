@@ -25,8 +25,8 @@ type Message = {
 }
 
 const USERS: Record<string, { name: string; avatar: string }> = {
-  user1: { name: "Meow", avatar: "🐱" },
-  user2: { name: "Quack", avatar: "🦆" }
+  meow: { name: "Meow", avatar: "🐱" },
+  quack: { name: "Quack", avatar: "🦆" }
 }
 
 export default function ChatPage() {
@@ -34,7 +34,7 @@ export default function ChatPage() {
   
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null)
   const [passphrase, setPassphrase] = useState("")
-  const [userId, setUserId] = useState<"user1" | "user2">("user1")
+  const [userId, setUserId] = useState<"meow" | "quack">("meow")
   const [isUnlocking, setIsUnlocking] = useState(false)
 
   const { myStatus, otherStatus } = usePresence({ userId, enabled: !!cryptoKey })
@@ -74,7 +74,7 @@ export default function ChatPage() {
         if (lastMessageId !== "") {
           const newIncoming = data.filter(m => String(m.timestamp) > lastMessageId && m.sender !== userId)
           if (newIncoming.length > 0) {
-            const senderName = userId === "user1" ? USERS.user2.name : USERS.user1.name;
+            const senderName = userId === "meow" ? USERS.quack.name : USERS.meow.name;
             notify(`New message from ${senderName}`, { body: "You have securely received a new message." })
           }
         }
@@ -189,7 +189,7 @@ export default function ChatPage() {
         myStatus={myStatus}
         otherStatus={otherStatus}
         myName={currentUser.name}
-        otherName={userId === "user1" ? USERS.user2.name : USERS.user1.name}
+        otherName={userId === "meow" ? USERS.quack.name : USERS.meow.name}
       />
       
       <main className="flex-1 overflow-hidden relative flex flex-col w-full bg-zinc-950">
