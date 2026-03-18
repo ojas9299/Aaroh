@@ -34,8 +34,8 @@ export function validateImage(file: File) {
     throw new Error("Only jpg, png, webp, and gif images are allowed");
   }
 
-  if (file.size > 2 * 1024 * 1024) {
-    throw new Error("Maximum image size is 2MB");
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("Maximum image size is 5MB");
   }
 }
 

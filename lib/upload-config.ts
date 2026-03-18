@@ -40,7 +40,7 @@ const diskStorage = multer.diskStorage({
 });
 
 const sharedLimits = {
-  fileSize: 2 * 1024 * 1024,
+  fileSize: 5 * 1024 * 1024,
 };
 
 export const uploadMemory = multer({
